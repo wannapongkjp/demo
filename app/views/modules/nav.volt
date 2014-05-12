@@ -1,3 +1,9 @@
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/auth.min.css") }}" />
+    	<link rel="stylesheet" type="text/css" href="{{ static_url("css/base.min.css") }}" />
+		<link rel="stylesheet" type="text/css" href="{{ static_url("css/homework.min.css") }}" />
+		<link rel="stylesheet" type="text/css" href="{{ static_url("css/news.min.css") }}" />
+		<link rel="stylesheet" type="text/css" href="{{ static_url("css/profile.min.css") }}" />
+		<link rel="stylesheet" type="text/css" href="{{ static_url("css/settings.min.css") }}" />
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">

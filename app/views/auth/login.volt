@@ -1,3 +1,4 @@
+{% include "modules/nav" with ['user': false ] %}
 <div id="auth">
 	<div class="container">
 		<div class="row">
