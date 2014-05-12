@@ -8,7 +8,7 @@ return new \Phalcon\Config(array(
 		'host' => 'localhost',
 		'username' => 'root',
 		'password' => '',
-		'dbname' => 'website' 
+		'dbname' => 'demo' 
 	),
 	'application' => array(
 		'controllersDir' => __DIR__ . '/../../../app/controllers/',
