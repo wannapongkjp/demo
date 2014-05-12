@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
-				<div>{{ flash.output() }}</div>
+				<div>{{ messages }}</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">แก้ไขข้อมูลบัญชีผู้ใช้</h3>

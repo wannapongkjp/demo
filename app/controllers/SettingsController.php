@@ -35,20 +35,23 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		$this->hasLogin();
 		if($this->request->isPost()){
 			if($this->security->checkToken()){
-				if($this->validateProfileData()){
+				$messages = $this->validateProfileData();
+				if($messages===true){
 					$data = $this->request->getPost();
 					$user = Users::findFirst($data["id"]);
 					if($user){
 						if($user->save($data)){
 							$this->auth->updateSession($user);
-							$this->flash->success("บันทึกข้อมูลเรียบร้อย.");
+							$messages = "บันทึกข้อมูลเรียบร้อย.";
 						}else{
-							$this->flash->error("บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง.");
+							$messages = "บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง.";
 						}
 					}else{
 						echo "Incorrect User Account!";
 						$this->view->disable();
 					}
+				}else{
+					$messages = $this->renderErrorMessage($messages);
 				}
 			}else{
 				echo "Invalid Token!";
@@ -57,7 +60,8 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		}
 		// Render view data
 		$this->renderView(array(
-			"title" => "Settings - profile" 
+			"title" => "Settings - profile",
+			"messages" => $messages
 		));
 	}
 	private function validateProfileData(){
@@ -78,12 +82,7 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		// Run validation data
 		$messages = $validation->validate($this->request->getPost());
 		if(count($messages)){
-			$error = "";
-			foreach($messages as $message){
-				$error .= $message . "<br/>";
-			}
-			$this->flash->error($error);
-			return false;
+			return $messages;
 		}
 		return true;
 	}
@@ -95,20 +94,23 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		$this->hasLogin();
 		if($this->request->isPost()){
 			if($this->security->checkToken()){
-				if($this->validateAccountData()){
+				$messages = $this->validateAccountData();
+				if($messages===true){
 					$data = $this->request->getPost();
 					$user = Users::findFirst($data["id"]);
 					if($user){
 						if($user->save($data)){
 							$this->auth->updateSession($user);
-							$this->flash->success("บันทึกข้อมูลเรียบร้อย.");
+							$messages = "บันทึกข้อมูลเรียบร้อย.";
 						}else{
-							$this->flash->error("บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง.");
+							$messages = "บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง.";
 						}
 					}else{
 						echo "Incorrect User Account!";
 						$this->view->disable();
 					}
+				}else{
+					$messages = $this->renderErrorMessage($messages);
 				}
 			}else{
 				echo "Invalid Token!";
@@ -117,7 +119,8 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		}
 		// Render view data
 		$this->renderView(array(
-			"title" => "Settings - account" 
+			"title" => "Settings - account",
+			"messages" => $messages
 		));
 	}
 	private function validateAccountData(){
@@ -141,12 +144,7 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		// Run validation data
 		$messages = $validation->validate($this->request->getPost());
 		if(count($messages)){
-			$error = "";
-			foreach($messages as $message){
-				$error .= $message . "<br/>";
-			}
-			$this->flash->error($error);
-			return false;
+			return $messages;
 		}
 		return true;
 	}
@@ -160,7 +158,8 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		if($this->request->isPost()){
 			if($this->security->checkToken()){
 				// Validation data
-				if($this->validatePasswordData()){
+				$messages = $this->validatePasswordData();
+				if($messages===true){
 					$data = $this->request->getPost();
 					$user = Users::findFirst($data["id"]);
 					// Check old password
@@ -173,17 +172,19 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 							);
 							// Store data
 							if($user->save($passwordData)){
-								$this->flash->success("บันทึกข้อมูลเรียบร้อย.");
+								$messages = "บันทึกข้อมูลเรียบร้อย.";
 							}else{
-								$this->flash->error("บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง.");
+								$messages = "บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง.";
 							}
 						}else{
-							$this->flash->error("รหัสผ่านเดิมไม่ถูกต้อง");
+							$messages = "รหัสผ่านเดิมไม่ถูกต้อง";
 						}
 					}else{
 						echo "Incorrect User Account!";
 						$this->view->disable();
 					}
+				}else{
+					$messages = $this->renderErrorMessage($messages);
 				}
 			}else{
 				echo "Invalid Token!";
@@ -192,7 +193,8 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		}
 		// Render view data
 		$this->renderView(array(
-			"title" => "Settings - password" 
+			"title" => "Settings - password",
+			"messages" => $messages
 		));
 	}
 	private function validatePasswordData(){
@@ -221,12 +223,7 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		// Run validation data
 		$messages = $validation->validate($this->request->getPost());
 		if(count($messages)){
-			$error = "";
-			foreach($messages as $message){
-				$error .= $message . "<br/>";
-			}
-			$this->flash->error($error);
-			return false;
+			return $messages;
 		}
 		return true;
 	}
@@ -238,6 +235,7 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 		$user = Users::findFirst($this->auth->getUser()->id);
 		$this->view->title = $data["title"];
 		$this->view->user = $user;
+		$this->view->messages = $data["messages"];
 	}
 	private function hasLogin(){
 		$auth = $this->di->get("auth");
@@ -245,5 +243,18 @@ class SettingsController extends \Phalcon\Mvc\Controller{
 			$this->response->redirect("auth/login");
 			$this->view->disable();
 		}
+	}
+	private function renderErrorMessage($messages){
+		$html = '<div class="alert alert-danger">';
+		if(is_string($messages)){
+			$html .= $messages;
+		}else{
+			foreach($messages as $message){
+				var_dump($message->getMessage());
+				$html .= $message->getMessage() . "<br/>";
+			}
+		}
+		$html .= '</div>';
+		return $html;
 	}
 }
